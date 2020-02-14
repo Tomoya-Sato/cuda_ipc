@@ -18,6 +18,10 @@ GpuIpc::GpuIpc()
   bufCounter_ = 0;
 }
 
+GpuIpc::~GpuIpc()
+{
+}
+
 unsigned char* GpuIpc::initGpuMemory()
 {
   checkCudaErrors(cudaMalloc((void**)&data_, DSIZE*sizeof(pcl::PointXYZ)));
@@ -29,7 +33,7 @@ unsigned char* GpuIpc::initGpuMemory()
   checkCudaErrors(cudaIpcGetMemHandle(&my_handle, data_));
 
   memset(handle_buffer, 0, sizeof(my_handle)+1);
-  memcpy(handle_buffer, (unsigned char*)(&my_handle));
+  memcpy(handle_buffer, (unsigned char*)(&my_handle), sizeof(my_handle));
 
   return handle_buffer;
 }
@@ -60,7 +64,7 @@ void GpuIpc::rotateBuffer()
   return;
 }
 
-void GpuIpcTest::storeBuffer(pcl::PointXYZ *tmp, int size)
+void GpuIpc::storeBuffer(pcl::PointXYZ *tmp, int size)
 {
  if (bufCounter_ == BUF_SIZE) rotateBuffer();
  
@@ -75,7 +79,7 @@ void GpuIpcTest::storeBuffer(pcl::PointXYZ *tmp, int size)
   return;
 }
 
-void GpuIpcTest::freeResources()
+void GpuIpc::freeResource()
 {
   checkCudaErrors(cudaFree(data_));
   

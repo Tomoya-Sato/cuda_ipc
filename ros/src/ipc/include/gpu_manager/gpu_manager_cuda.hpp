@@ -3,6 +3,11 @@
 
 #define BUF_SIZE 10
 
+#include <pcl/point_cloud.h>
+#include <pcl/point_types.h>
+
+#include <ros/ros.h>
+
 class GpuIpc
 {
   public:
