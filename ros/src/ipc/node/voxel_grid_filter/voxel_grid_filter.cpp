@@ -72,6 +72,7 @@ void handle_callback(const ipc_msgs::gpu_handle msg)
 void data_callback(const ipc_msgs::data_size msg)
 {
   int ret_size = vgrid.filterPoints(msg.data);
+  data_msg.header = msg.header;
   data_msg.data = ret_size;
   data_pub.publish(data_msg);
 

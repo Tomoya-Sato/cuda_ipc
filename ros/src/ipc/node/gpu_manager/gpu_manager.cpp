@@ -54,6 +54,7 @@ void points_callback(const sensor_msgs::PointCloud2::ConstPtr &msg)
   pcl::PointXYZ *input = cloud.points.data();
   gmng.storeBuffer(input, (int)cloud.size());
 
+  data_msg.header = msg->header;
   data_msg.data = gmng.updateData();
   data_pub.publish(data_msg);
 }
